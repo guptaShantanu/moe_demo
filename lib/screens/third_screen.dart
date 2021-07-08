@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:moengage_flutter/moengage_flutter.dart';
 import 'package:moengage_flutter/properties.dart';
@@ -12,6 +15,43 @@ class ThirdScreen extends StatefulWidget {
 }
 
 class _ThirdScreenState extends State<ThirdScreen> {
+
+  StreamSubscription onMessageSubscription;
+  StreamSubscription onMessageOpenedApp;
+
+  static Future<void> backgroundMessageHandler(RemoteMessage message) async {
+    print("Background recieved message ${message.data}");
+
+  }
+
+
+  void initFirebaseListeners(){
+    onMessageSubscription = FirebaseMessaging.onMessage.listen((event) {
+      //TOdO: Handle RemoteMessage when app is in the foreground. Show a HUD notification?
+      print(
+          'ℹ onMessage event listener callback running with data = ${event.data.toString()} ');
+    });
+
+    onMessageOpenedApp =
+        FirebaseMessaging.onMessageOpenedApp.listen((event) async {
+          print("ℹ onMessageOpenedApp event listener callback running");
+
+        //   await processUriLinkOpenIntent(event.data,
+        //       executedFromNotification: true);
+        });
+
+    // Top level function
+    FirebaseMessaging.onBackgroundMessage(
+        _ThirdScreenState.backgroundMessageHandler);
+  }
+
+  @override
+  void initState() {
+    initFirebaseListeners();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
