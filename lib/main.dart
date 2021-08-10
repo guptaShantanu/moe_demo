@@ -1,10 +1,17 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:imumz_moengage_demo/screens/first_screen.dart';
 import 'package:moengage_flutter/inapp_campaign.dart';
 import 'package:moengage_flutter/moengage_flutter.dart';
 import 'package:moengage_flutter/push_campaign.dart';
 
+Future<void> backgroundMessageHandler(RemoteMessage message) async {
+  print("Background recieved message ${message.data}");
+}
+
+
 void main() {
+  FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
   runApp(MyApp());
 }
  class MyApp extends StatefulWidget {

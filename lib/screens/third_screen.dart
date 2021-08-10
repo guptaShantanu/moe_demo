@@ -41,8 +41,8 @@ class _ThirdScreenState extends State<ThirdScreen> {
         });
 
     // Top level function
-    FirebaseMessaging.onBackgroundMessage(
-        _ThirdScreenState.backgroundMessageHandler);
+    // FirebaseMessaging.onBackgroundMessage(
+    //     _ThirdScreenState.backgroundMessageHandler);
   }
 
   @override
